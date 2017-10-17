@@ -76,7 +76,7 @@ plot(contour(:,1),contour(:,2),'k-');
 %find longest axis of the outline, extract midpoints (as needed)
 bbox=[min(contour(:,1)) min(contour(:,2));...
     max(contour(:,1)) max(contour(:,2))];
-if J==2 && ~isempty(refine)
+if (J==2 && ~isempty(refine)) || (runs==1 && ~isempty(refine))
 if refine(1)==0;
     aspect=diff(bbox);
 [~,i]=min(aspect);
