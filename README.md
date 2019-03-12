@@ -1,7 +1,11 @@
 # CM_CMM - CMM methodology for contour method measurements
 This collection of scripts/functions permits one to automate Coordinate Measurement Machine (CMM) programming for 'hen-peck' style measurements via MATLAB.
 
-Simple outlines and those which contain self-restraint features are included. Documentation is included herein, as well as demonstration outlines. Input is a series of `.txt` files comprising the outline/restraint features, and the output is a `*.agw` file which has DMIS-like syntax. The output files can be directly interpreted by Mitutoyo CMMs with the ASCII MCOSMOS interpreter installed.
+Simple outlines and those which contain self-restraint features are included. Documentation is included herein, as well as demonstration outlines. Input is a series of `.txt` files comprising the outline/restraint features, and the output is either:
+* An `*.agw` file which has *pure* DMIS syntax. These output files can be directly interpreted by Mitutoyo CMMs with the ASCII MCOSMOS interpreter installed. Other packages that might be able to read this include Camio (LK-DMIS), Open DMIS, Virtual DMIS, etc. This is a complete program that contains file locations for results, file writing intervals and intermediate points.
+* A `*.csv` file that can be imported into *non*-DMIS packages such as (confusingly) PC-DMIS, MCOSMOS, Calypso etc. Note that a complete programme will need to be created such as probe selection, intermediate points and so on.
+
+Specifying output is accomplished via setting a variable true or false in MeasMesh.m
 
 # Quick start
 To get started, read the documentation and experiment with the main scripts, `OutlineGen.m` and `MeasMesh.m`. These have been pre-populated with demonstration outlines included in the repository.

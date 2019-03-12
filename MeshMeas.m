@@ -5,12 +5,14 @@ clc
 
 P=5; %Seed spacing, in mm
 xyOff=0.1; %outline offset in mm
-redo=true;
+redo=true; %set to be true to overwrite contents of generated .mat file,
+% otherwise preserve last run mesh and load it for display purposes.
 refine=0; %Mesh can be refined from P to 
 % to P/2 when refine=0 at x=mean(x) over a line described by refine= an Nx2
 % matrix of x,y values. For no refinement, set equal to an empty set.
 OutlineGenFile='Discretized_outline.mat';
-
+write_agw=false; %True - write a Mitutoyo-specific measurement file; false, 
+% write measurement points to csv with PPgm prefix in x,y,z,i,j,k format
 
 %handle directories - make them if they don't exist
 Pdir='Programs';
@@ -28,7 +30,8 @@ end
 GPakFName='MyGPakFName'; %what appears in MCOSMOS
 MeasFileName = 'MyMeasFileName.txt';
 
-PPgm = fullfile(Pdir,'MyPartProgram'); %*.agw file extension
+PPgm = fullfile(Pdir,'MyPartProgram'); %*.agw file extension or csv file
+
 MeasFile=GetFullPath(fullfile(Rdir,MeasFileName));
 
 load(OutlineGenFile);
@@ -76,7 +79,7 @@ plot(contour(:,1),contour(:,2),'k-');
 %find longest axis of the outline, extract midpoints (as needed)
 bbox=[min(contour(:,1)) min(contour(:,2));...
     max(contour(:,1)) max(contour(:,2))];
-if (J==2 && ~isempty(refine)) || (runs==1 && ~isempty(refine))
+if J==2 && ~isempty(refine)
 if refine(1)==0;
     aspect=diff(bbox);
 [~,i]=min(aspect);
@@ -153,4 +156,9 @@ end
 % end
 toc
 
-meshgen_cmmpnts(zmax+1.5,PPgm,GPakFName,MeasFile,p,'new')
+if write_agw==true
+	meshgen_agwpnts(zmax+1.5,PPgm,GPakFName,MeasFile,p,'new');
+else
+	meshgen_csvpnts(zmax+1.5,PPgm,p,'new');
+end
+
