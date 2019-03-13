@@ -71,8 +71,23 @@ end
 
 %create line segment consisting of the 1.1 min/max y value
 miny=min(A{end}(:,2)); maxy=max(A{end}(:,2));
-miny=0.9*miny; maxy=1.1*maxy;
+% As per Xuanang Liu:
+if maxy > 0
+	maxy=1.1*maxy;
+else
+	maxy=0.9*maxy;
+end
+if miny > 0
+	miny=0.9*miny;
+else
+	miny=1.1*miny;
+end
 y=[miny maxy];
+
+%original code didn't handle negative values for y
+% miny=min(A{end}(:,2)); maxy=max(A{end}(:,2));
+% miny=0.9*miny; maxy=1.1*maxy;
+% y=[miny maxy];
 
 
 x=-b/a.*y-c/a;
