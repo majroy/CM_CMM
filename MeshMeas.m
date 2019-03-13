@@ -159,6 +159,6 @@ toc
 if write_agw==true
 	meshgen_agwpnts(zmax+1.5,PPgm,GPakFName,MeasFile,p,'new');
 else
-	meshgen_csvpnts(zmax+1.5,PPgm,p,'new');
+	meshgen_csvpnts(zmax,PPgm,p,'new');
 end
 

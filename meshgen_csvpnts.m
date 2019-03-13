@@ -37,18 +37,22 @@ end
 
 %create measurement matrix
 p_output = zeros(size(p,1),6); %initialize
-p_output(:,end)=-1; %measurement direction
+p_output(:,end)=1; %measurement direction
 p_output(:,1:2)=p; %x,y location
 p_output(:,3)=Zmeas;
 
-%use csvwrite 
+fid = fopen(strcat(PPgm,'.csv'),'w+');
+fprintf(fid,'TYPE,NAME,X,Y,Z,I,J,K\n'); %header
+
 try
-	csvwrite(strcat(PPgm,'.csv'),p_output);
+    for j=1:size(p_output,1)
+    fprintf(fid,'POINT,PNT%i,%f,%f,%f,%i,%i,%i\n',j,p_output(j,:));    
+    end
 catch
 	warning('Failed to write csv file.');
 	return
 end
-
+fclose(fid);
 fprintf('List written.\n')
 
 end %meshgen_csvpnts
